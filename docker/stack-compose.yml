@@ -1,0 +1,40 @@
+version: "2"
+services:
+  account-microservice:
+    image: ithings/nemesis/account-microservice:latest
+    links:
+      - postgres
+      - logstash
+    depends_on:
+      - postgres
+      - logstash
+    expose:
+      - "8081"
+  cache-infrastructure:
+    image: ithings/nemesis/cache-infrastructure:latest
+    links:
+      - redis
+      - logstash
+    depends_on:
+      - redis
+      - logstash
+  monitor-dashboard:
+    image: ithings/nemesis/monitor-dashboard:latest
+    ports:
+      - "9100:9100"
+    links:
+      - logstash
+    depends_on:
+      - logstash
+  api-gateway:
+    image: ithings/nemesis/api-gateway:latest
+    ports:
+      - "8787:8787"
+    environment:
+      - JAVA_OPTS="-Xms128m -Xmx256m"
+    links:
+      - keycloak-server
+      - account-microservice
+      - logstash
+    extra_hosts:
+      - "dockernet:${EXTERNAL_IP}"
