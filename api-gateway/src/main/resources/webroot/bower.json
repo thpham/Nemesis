@@ -1,0 +1,7 @@
+{
+  "name": "ithings-nemesis",
+  "version": "1.0.0",
+  "dependencies": {
+    "vertx3-eventbus-client": "3.4.0"
+  }
+}
