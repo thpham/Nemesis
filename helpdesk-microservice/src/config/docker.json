@@ -1,0 +1,5 @@
+{
+  "api.name": "helpdesk",
+  "user.account.http.address": "helpdesk-microservice",
+  "user.account.http.port": 8083
+}
