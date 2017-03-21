@@ -1,0 +1,5 @@
+{
+  "api.name": "supervisor",
+  "user.account.http.address": "supervisor-microservice",
+  "user.account.http.port": 8084
+}
