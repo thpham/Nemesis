@@ -1,0 +1,11 @@
+{
+  "api.name": "account",
+  "user.account.http.address": "account-microservice",
+  "user.account.http.port": 8082,
+  "dataSourceName": "user-account",
+  "jdbcUrl": "jdbc:postgresql://postgres:5432/nemesis",
+  "provider_class": "io.vertx.ext.jdbc.spi.impl.HikariCPDataSourceProvider",
+  "username": "postgres",
+  "password": "postgres",
+  "maximumPoolSize": 30
+}

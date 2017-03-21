@@ -1,0 +1,11 @@
+{
+  "api.name": "account",
+  "user.account.http.address": "0.0.0.0",
+  "user.account.http.port": 8082,
+  "dataSourceName": "user-account",
+  "jdbcUrl": "jdbc:postgresql://localhost:5432/nemesis",
+  "provider_class": "io.vertx.ext.jdbc.spi.impl.HikariCPDataSourceProvider",
+  "username": "nemesis",
+  "password": "nemesis",
+  "maximumPoolSize": 30
+}
