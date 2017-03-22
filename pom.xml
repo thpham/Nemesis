@@ -17,7 +17,7 @@
         <module>cache-infrastructure</module>
         <module>helpdesk-microservice</module>
         <module>supervisor-microservice</module>
-<!--        <module>mqtt-server</module> -->
+        <module>mqtt-server</module>
     </modules>
 
     <properties>
