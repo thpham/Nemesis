@@ -2,6 +2,7 @@
   "api.gateway.http.port": 8787,
   "api.gateway.http.address": "0.0.0.0",
   "api.gateway.http.address.external": "localhost",
+  "api.gateway.metrics.interval": 5000,
   "circuit-breaker": {
     "name": "api-gateway-cb",
     "timeout": 10000,

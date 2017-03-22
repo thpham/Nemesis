@@ -18,6 +18,7 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.OAuth2FlowType;
 import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
+import io.vertx.ext.dropwizard.MetricsService;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -110,6 +111,15 @@ public class APIGatewayVerticle extends RestAPIVerticle {
           future.fail(ar.cause());
         }
       });
+    
+    // create Dropwizard metrics service
+    MetricsService service = MetricsService.create(vertx);
+    int metricsInterval = config().getInteger("api.gateway.metrics.interval", 5000);
+    // send metrics message to the event bus
+    vertx.setPeriodic(metricsInterval, t -> {
+      JsonObject metrics = service.getMetricsSnapshot(vertx);
+      vertx.eventBus().publish("microservice.api-gateway.metrics", metrics);
+    });
   }
 
   private void dispatchRequests(RoutingContext context) {
