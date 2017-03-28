@@ -1,0 +1,189 @@
+{
+    "realm": "nemesis",
+    "displayName": "iThings Nemesis",
+    "displayNameHtml": "<div class='kc-logo-text'><span>Nemesis</span></div>",
+    "notBefore": 0,
+    "revokeRefreshToken": true,
+    "accessTokenLifespan": 60,
+    "accessTokenLifespanForImplicitFlow": 900,
+    "ssoSessionIdleTimeout": 600,
+    "ssoSessionMaxLifespan": 36000,
+    "offlineSessionIdleTimeout": 2592000,
+    "accessCodeLifespan": 60,
+    "accessCodeLifespanUserAction": 300,
+    "accessCodeLifespanLogin": 1800,
+    "enabled": true,
+    "sslRequired": "external",
+    "registrationAllowed": false,
+    "registrationEmailAsUsername": true,
+    "rememberMe": true,
+    "verifyEmail": true,
+    "loginWithEmailAllowed": true,
+    "duplicateEmailsAllowed": false,
+    "resetPasswordAllowed": true,
+    "editUsernameAllowed": false,
+    "bruteForceProtected": true,
+    "maxFailureWaitSeconds": 900,
+    "minimumQuickLoginWaitSeconds": 60,
+    "waitIncrementSeconds": 60,
+    "quickLoginCheckMilliSeconds": 1000,
+    "maxDeltaTimeSeconds": 43200,
+    "failureFactor": 30,
+    "defaultRoles": ["offline_access"],
+    "requiredCredentials": ["password"],
+    "passwordPolicy": "hashIterations(20000)",
+    "otpPolicyType": "totp",
+    "otpPolicyAlgorithm": "HmacSHA1",
+    "otpPolicyInitialCounter": 0,
+    "otpPolicyDigits": 6,
+    "otpPolicyLookAheadWindow": 1,
+    "otpPolicyPeriod": 30,
+    "browserSecurityHeaders": {
+        "xContentTypeOptions": "nosniff",
+        "xFrameOptions": "SAMEORIGIN",
+        "contentSecurityPolicy": "frame-src 'self'"
+    },
+    "smtpServer": {
+        "password": "**********",
+        "starttls": "true",
+        "auth": "true",
+        "port": "465",
+        "host": "mail.google.com",
+        "from": "no-reply@ithings.ch",
+        "ssl": "true",
+        "user": "mailuser"
+    },
+    "loginTheme": "keycloak",
+    "accountTheme": "keycloak",
+    "adminTheme": "keycloak",
+    "emailTheme": "keycloak",
+    "eventsEnabled": false,
+    "eventsListeners": ["jboss-logging"],
+    "enabledEventTypes": [],
+    "adminEventsEnabled": false,
+    "adminEventsDetailsEnabled": false,
+    "internationalizationEnabled": true,
+    "supportedLocales": ["de", "en", "it", "fr", "es"],
+    "defaultLocale": "en",
+    "browserFlow": "browser",
+    "registrationFlow": "registration",
+    "directGrantFlow": "direct grant",
+    "resetCredentialsFlow": "reset credentials",
+    "clientAuthenticationFlow": "clients",
+    "attributes": {
+        "_browser_header.xFrameOptions": "SAMEORIGIN",
+        "failureFactor": "30",
+        "quickLoginCheckMilliSeconds": "1000",
+        "maxDeltaTimeSeconds": "43200",
+        "displayName": "iThings Nemesis",
+        "_browser_header.xContentTypeOptions": "nosniff",
+        "maxFailureWaitSeconds": "900",
+        "bruteForceProtected": "true",
+        "_browser_header.contentSecurityPolicy": "frame-src 'self'",
+        "minimumQuickLoginWaitSeconds": "60",
+        "displayNameHtml": "<div class='kc-logo-text'><span>Nemesis</span></div>",
+        "waitIncrementSeconds": "60"
+    },
+    "privateKey": "MIICXAIBAAKBgQCrVrCuTtArbgaZzL1hvh0xtL5mc7o0NqPVnYXkLvgcwiC3BjLGw1tGEGoJaXDuSaRllobm53JBhjx33UNv+5z/UMG4kytBWxheNVKnL6GgqlNabMaFfPLPCF8kAgKnsi79NMo+n6KnSY8YeUmec/p2vjO2NjsSAVcWEQMVhJ31LwIDAQABAoGAfmO8gVhyBxdqlxmIuglbz8bcjQbhXJLR2EoS8ngTXmN1bo2L90M0mUKSdc7qF10LgETBzqL8jYlQIbt+e6TH8fcEpKCjUlyq0Mf/vVbfZSNaVycY13nTzo27iPyWQHK5NLuJzn1xvxxrUeXI6A2WFpGEBLbHjwpx5WQG9A+2scECQQDvdn9NE75HPTVPxBqsEd2z10TKkl9CZxu10Qby3iQQmWLEJ9LNmy3acvKrE3gMiYNWb6xHPKiIqOR1as7L24aTAkEAtyvQOlCvr5kAjVqrEKXalj0Tzewjweuxc0pskvArTI2Oo070h65GpoIKLc9jf+UA69cRtquwP93aZKtW06U8dQJAF2Y44ks/mK5+eyDqik3koCI08qaC8HYq2wVl7G2QkJ6sbAaILtcvD92ToOvyGyeE0flvmDZxMYlvaZnaQ0lcSQJBAKZU6umJi3/xeEbkJqMfeLclD27XGEFoPeNrmdx0q10Azp4NfJAY+Z8KRyQCR2BEG+oNitBOZ+YXF9KCpH3cdmECQHEigJhYg+ykOvr1aiZUMFT72HU0jnmQe2FVekuG+LJUt2Tm7GtMjTFoGpf0JwrVuZN39fOYAlo+nTixgeW7X8Y=",
+    "publicKey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrVrCuTtArbgaZzL1hvh0xtL5mc7o0NqPVnYXkLvgcwiC3BjLGw1tGEGoJaXDuSaRllobm53JBhjx33UNv+5z/UMG4kytBWxheNVKnL6GgqlNabMaFfPLPCF8kAgKnsi79NMo+n6KnSY8YeUmec/p2vjO2NjsSAVcWEQMVhJ31LwIDAQAB",
+    "users": [
+        {
+            "username": "bob@ithings.ch",
+            "enabled": true,
+            "totp": false,
+            "emailVerified": true,
+            "email": "bob@ithings.ch",
+            "firstName": "Bob",
+            "lastName": "",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "bob1234"
+                }
+            ],
+            "realmRoles": ["user", "uma_authorization"],
+            "clientRoles": {
+                "account": ["view-profile", "manage-account"]
+            },
+            "attributes": {
+                "locale": ["en"]
+            },
+            "requiredActions": []
+        },
+        {
+            "username": "alice@ithings.ch",
+            "enabled": true,
+            "totp": false,
+            "emailVerified": true,
+            "email": "alice@ithings.ch",
+            "firstName": "Alice",
+            "lastName": "",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "alice1234"
+                }
+            ],
+            "realmRoles": ["user", "uma_authorization"],
+            "clientRoles": {
+                "account": ["view-profile", "manage-account"]
+            },
+            "attributes": {
+                "locale": ["en"]
+            },
+            "requiredActions": []
+        },
+        {
+            "username": "admin@ithings.ch",
+            "enabled": true,
+            "totp": false,
+            "emailVerified": true,
+            "email": "admin@ithings.ch",
+            "firstName": "Admin",
+            "lastName": "",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "admin1234"
+                }
+            ],
+            "realmRoles": ["user", "admin", "uma_authorization"],
+            "clientRoles": {
+                "realm-management": ["realm-admin"],
+                "account": ["manage-account"]
+            },
+            "attributes": {
+                "locale": ["en"]
+            },
+            "requiredActions": []
+        }
+    ],
+    "roles": {
+        "realm": [
+            {
+                "name": "user",
+                "description": "User privileges"
+            },
+            {
+                "name": "admin",
+                "description": "Administrator privileges"
+            }
+        ]
+    },
+    "scopeMappings": [
+    ],
+    "clients": [
+        {
+            "clientId": "authz-service",
+            "secret": "secret",
+            "authorizationServicesEnabled": true,
+            "enabled": true,
+            "redirectUris": ["http://localhost:8080/authz-service/*"],
+            "baseUrl": "http://localhost:8080/authz-service",
+            "adminUrl": "http://localhost:8080/authz-service",
+            "directAccessGrantsEnabled": true
+        }
+    ],
+    "clientScopeMappings": {
+    }
+}

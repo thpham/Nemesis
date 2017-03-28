@@ -6,21 +6,52 @@ services:
 #      - "8000:80"
 #    volumes:
 #      - ${DIR}/config-server:/usr/local/apache2/htdocs:ro
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
+      KAFKA_CREATE_TOPICS: 'test:1:1:compact'
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   postgres:
-    image: starefossen/pgrouting:9.6-2.3-2.3
+    image: ithings/nemesis/postgres:latest
+    build:
+      context: ./postgresql
     container_name: postgres
     ports:
     - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: keycloak
+      POSTGRES_DB: nemesis
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+      KEYCLOAK_DB: keycloak
   mongo:
     image: mongo:3.4
+    container_name: mongo
+    ports:
+      - "27017:27017"
     expose:
       - "27017"
-  keycloak-server:
-    image: jboss/keycloak-postgres:latest
+  keycloak:
+    image: ithings/nemesis/keycloak:latest
+    build:
+      context: ./keycloak
+    container_name: keycloak
     ports:
       - "8080:8080"
     links:
@@ -31,16 +62,20 @@ services:
       - POSTGRES_DATABASE=keycloak
       - POSTGRES_PORT_5432_TCP_ADDR=postgres
       - POSTGRES_PORT_5432_TCP_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
       - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_PASSWORD=nemesis
   redis:
     image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
     expose:
       - "6379"
   elasticsearch:
     image: elasticsearch:latest
+    container_name: elasticsearch
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -49,6 +84,7 @@ services:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
   logstash:
     image: logstash:latest
+    container_name: logstash
     ports:
       - "12201:12201/udp"
     command: -e 'input { gelf { host => "0.0.0.0" port => 12201 } }
@@ -59,6 +95,7 @@ services:
       - elasticsearch
   kibana:
     image: kibana:latest
+    container_name: kibana
     ports:
       - "5601:5601"
     environment:

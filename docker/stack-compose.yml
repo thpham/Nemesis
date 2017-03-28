@@ -18,6 +18,30 @@ services:
     depends_on:
       - redis
       - logstash
+  helpdesk-microservice:
+    image: ithings/nemesis/helpdesk-microservice:latest
+    ports:
+      - "9100:9100"
+    links:
+      - logstash
+    depends_on:
+      - logstash
+  supervisor-microservice:
+    image: ithings/nemesis/supervisor-microservice:latest
+    ports:
+      - "9100:9100"
+    links:
+      - logstash
+    depends_on:
+      - logstash
+  mqtt-server:
+    image: ithings/nemesis/mqtt-server:latest
+    ports:
+      - "9100:9100"
+    links:
+      - logstash
+    depends_on:
+      - logstash
   monitor-dashboard:
     image: ithings/nemesis/monitor-dashboard:latest
     ports:
