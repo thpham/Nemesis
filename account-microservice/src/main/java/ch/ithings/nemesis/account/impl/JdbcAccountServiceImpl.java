@@ -120,4 +120,9 @@ public class JdbcAccountServiceImpl extends JdbcRepositoryWrapper implements Acc
   private static final String DELETE_STATEMENT = "DELETE FROM user_account WHERE id = ?";
   private static final String DELETE_ALL_STATEMENT = "DELETE FROM user_account";
 
+    @Override
+    public void close() {
+        
+    }
+
 }

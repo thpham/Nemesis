@@ -42,6 +42,7 @@ import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import java.util.List;
 import ch.ithings.nemesis.account.Account;
 import ch.ithings.nemesis.account.AccountService;
+import io.vertx.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 
@@ -97,6 +98,7 @@ public class AccountServiceVertxProxyHandler extends ProxyHandler {
   private void checkTimedOut(long id) {
     long now = System.nanoTime();
     if (now - lastAccessed > timeoutSeconds * 1000000000) {
+      service.close();
       close();
     }
   }
@@ -192,6 +194,12 @@ public class AccountServiceVertxProxyHandler extends ProxyHandler {
         }
         case "deleteAllAccounts": {
           service.deleteAllAccounts(createHandler(msg));
+          break;
+        }
+
+        case "close": {
+          service.close();
+          close();
           break;
         }
         default: {

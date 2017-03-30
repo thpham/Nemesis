@@ -35,6 +35,7 @@ import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import java.util.List;
 import ch.ithings.nemesis.account.Account;
 import ch.ithings.nemesis.account.AccountService;
+import io.vertx.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 
@@ -211,6 +212,17 @@ public class AccountServiceVertxEBProxy implements AccountService {
       }
     });
     return this;
+  }
+
+  public void close() {
+    if (closed) {
+      throw new IllegalStateException("Proxy is closed");
+    }
+    closed = true;
+    JsonObject _json = new JsonObject();
+    DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
+    _deliveryOptions.addHeader("action", "close");
+    _vertx.eventBus().send(_address, _json, _deliveryOptions);
   }
 
 

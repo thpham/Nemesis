@@ -25,6 +25,8 @@ import io.vertx.core.AsyncResult
 import scala.collection.JavaConverters._
 import ch.ithings.nemesis.account.{Account => JAccount}
 import io.vertx.core.Handler
+import io.vertx.scala.core.Vertx
+import io.vertx.core.{Vertx => JVertx}
 
 /**
   * A service interface managing user accounts.
@@ -113,6 +115,10 @@ class AccountService(private val _asJava: Object) {
     this
   }
 
+  def close(): Unit = {
+    asJava.asInstanceOf[JAccountService].close()
+  }
+
  /**
    * Like [[initializePersistence]] but returns a [[scala.concurrent.Future]] instead of taking an AsyncResultHandler.
    */
@@ -189,4 +195,8 @@ class AccountService(private val _asJava: Object) {
 
 object AccountService {
   def apply(asJava: JAccountService) = new AccountService(asJava)  
+  def createProxy(vertx: Vertx, address: String): AccountService = {
+    AccountService(JAccountService.createProxy(vertx.asJava.asInstanceOf[JVertx], address.asInstanceOf[java.lang.String]))
+  }
+
 }

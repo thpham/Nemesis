@@ -198,6 +198,41 @@
       } else throw new TypeError('function invoked with invalid arguments');
     };
 
+    /**
+
+     @public
+
+     */
+    this.close = function() {
+      var __args = arguments;
+      if (__args.length === 0) {
+        if (closed) {
+          throw new Error('Proxy is closed');
+        }
+        j_eb.send(j_address, {}, {"action":"close"});
+        closed = true;
+        return;
+      } else throw new TypeError('function invoked with invalid arguments');
+    };
+
+  };
+
+  /**
+
+   @memberof module:user-account-js/account_service
+   @param vertx {Vertx} 
+   @param address {string} 
+   @return {AccountService}
+   */
+  AccountService.createProxy = function(vertx, address) {
+    var __args = arguments;
+    if (__args.length === 2 && typeof __args[0] === 'object' && __args[0]._jdel && typeof __args[1] === 'string') {
+      if (closed) {
+        throw new Error('Proxy is closed');
+      }
+      j_eb.send(j_address, {"vertx":__args[0], "address":__args[1]}, {"action":"createProxy"});
+      return;
+    } else throw new TypeError('function invoked with invalid arguments');
   };
 
   if (typeof exports !== 'undefined') {

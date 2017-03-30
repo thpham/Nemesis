@@ -21,6 +21,7 @@ import rx.Observable;
 import rx.Single;
 import java.util.List;
 import ch.ithings.nemesis.account.Account;
+import io.vertx.rxjava.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 
@@ -220,6 +221,15 @@ public class AccountService {
     return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
       deleteAllAccounts(fut);
     }));
+  }
+
+  public static AccountService createProxy(Vertx vertx, String address) { 
+    AccountService ret = AccountService.newInstance(ch.ithings.nemesis.account.AccountService.createProxy(vertx.getDelegate(), address));
+    return ret;
+  }
+
+  public void close() { 
+    delegate.close();
   }
 
 
