@@ -5,7 +5,8 @@
   "dataSourceName": "user-account",
   "jdbcUrl": "jdbc:postgresql://localhost:5432/nemesis",
   "provider_class": "io.vertx.ext.jdbc.spi.impl.HikariCPDataSourceProvider",
-  "username": "nemesis",
-  "password": "nemesis",
+  "driverClassName": "org.postgresql.Driver",
+  "username": "postgres",
+  "password": "postgres",
   "maximumPoolSize": 30
 }
