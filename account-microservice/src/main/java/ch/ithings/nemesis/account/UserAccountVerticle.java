@@ -9,6 +9,8 @@ import io.vertx.serviceproxy.ProxyHelper;
 
 import static ch.ithings.nemesis.account.AccountService.SERVICE_ADDRESS;
 import static ch.ithings.nemesis.account.AccountService.SERVICE_NAME;
+import io.vertx.core.eventbus.MessageConsumer;
+import io.vertx.core.json.JsonObject;
 
 
 /**
@@ -19,6 +21,7 @@ import static ch.ithings.nemesis.account.AccountService.SERVICE_NAME;
 public class UserAccountVerticle extends BaseMicroserviceVerticle {
 
   private AccountService accountService;
+  private MessageConsumer<JsonObject> consumer;
 
   @Override
   public void start(Future<Void> future) throws Exception {
@@ -27,7 +30,7 @@ public class UserAccountVerticle extends BaseMicroserviceVerticle {
     // create the service instance
     accountService = new JdbcAccountServiceImpl(vertx, config());
     // register the service proxy on event bus
-    ProxyHelper.registerService(AccountService.class, vertx, accountService, SERVICE_ADDRESS);
+    consumer = ProxyHelper.registerService(AccountService.class, vertx, accountService, SERVICE_ADDRESS);
     // publish the service and REST endpoint in the discovery infrastructure
     publishEventBusService(SERVICE_NAME, SERVICE_ADDRESS, AccountService.class)
       .compose(servicePublished -> deployRestVerticle())
@@ -40,5 +43,11 @@ public class UserAccountVerticle extends BaseMicroserviceVerticle {
       new DeploymentOptions().setConfig(config()),
       future.completer());
     return future.map(r -> null);
+  }
+  
+  @Override
+  public void stop(Future<Void> future) throws Exception {
+      super.stop();
+      ProxyHelper.unregisterService(consumer);
   }
 }
