@@ -68,4 +68,9 @@ public class DefaultCounterServiceImpl implements CounterService {
       }
     });
   }
+
+  @Override
+  public void close() {
+
+  }
 }

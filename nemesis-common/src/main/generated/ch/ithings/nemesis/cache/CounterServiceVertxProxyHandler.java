@@ -39,8 +39,10 @@ import io.vertx.serviceproxy.ProxyHelper;
 import io.vertx.serviceproxy.ProxyHandler;
 import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
+import io.vertx.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
+import ch.ithings.nemesis.cache.CounterService;
 
 /*
   Generated Proxy code - DO NOT EDIT
@@ -94,6 +96,7 @@ public class CounterServiceVertxProxyHandler extends ProxyHandler {
   private void checkTimedOut(long id) {
     long now = System.nanoTime();
     if (now - lastAccessed > timeoutSeconds * 1000000000) {
+      service.close();
       close();
     }
   }
@@ -133,6 +136,12 @@ public class CounterServiceVertxProxyHandler extends ProxyHandler {
         }
         case "reset": {
           service.reset((java.lang.String)json.getValue("key"), createHandler(msg));
+          break;
+        }
+
+        case "close": {
+          service.close();
+          close();
           break;
         }
         default: {

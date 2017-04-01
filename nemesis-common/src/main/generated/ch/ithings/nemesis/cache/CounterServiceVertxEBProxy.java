@@ -32,8 +32,10 @@ import java.util.function.Function;
 import io.vertx.serviceproxy.ProxyHelper;
 import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
+import io.vertx.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
+import ch.ithings.nemesis.cache.CounterService;
 
 /*
   Generated Proxy code - DO NOT EDIT
@@ -132,6 +134,17 @@ public class CounterServiceVertxEBProxy implements CounterService {
         resultHandler.handle(Future.succeededFuture(res.result().body()));
       }
     });
+  }
+
+  public void close() {
+    if (closed) {
+      throw new IllegalStateException("Proxy is closed");
+    }
+    closed = true;
+    JsonObject _json = new JsonObject();
+    DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
+    _deliveryOptions.addHeader("action", "close");
+    _vertx.eventBus().send(_address, _json, _deliveryOptions);
   }
 
 

@@ -19,6 +19,7 @@ package ch.ithings.nemesis.cache.rxjava;
 import java.util.Map;
 import rx.Observable;
 import rx.Single;
+import io.vertx.rxjava.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 
@@ -130,6 +131,15 @@ public class CounterService {
     return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
       reset(key, fut);
     }));
+  }
+
+  public static CounterService createProxy(Vertx vertx, String address) { 
+    CounterService ret = CounterService.newInstance(ch.ithings.nemesis.cache.CounterService.createProxy(vertx.getDelegate(), address));
+    return ret;
+  }
+
+  public void close() { 
+    delegate.close();
   }
 
 

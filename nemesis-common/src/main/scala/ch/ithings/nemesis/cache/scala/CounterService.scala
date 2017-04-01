@@ -23,6 +23,8 @@ import io.vertx.lang.scala.AsyncResultWrapper
 import io.vertx.core.AsyncResult
 import ch.ithings.nemesis.cache.{CounterService => JCounterService}
 import io.vertx.core.Handler
+import io.vertx.scala.core.Vertx
+import io.vertx.core.{Vertx => JVertx}
 
 /**
   * A service interface for global cache and counter management using a cache backend (e.g. Redis).
@@ -71,6 +73,10 @@ class CounterService(private val _asJava: Object) {
     asJava.asInstanceOf[JCounterService].reset(key.asInstanceOf[java.lang.String], {x: AsyncResult[Void] => resultHandler.handle(AsyncResultWrapper[Void, Unit](x, a => a))})
   }
 
+  def close(): Unit = {
+    asJava.asInstanceOf[JCounterService].close()
+  }
+
  /**
    * Like [[addThenRetrieve]] but returns a [[scala.concurrent.Future]] instead of taking an AsyncResultHandler.
    */
@@ -111,4 +117,8 @@ class CounterService(private val _asJava: Object) {
 
 object CounterService {
   def apply(asJava: JCounterService) = new CounterService(asJava)  
+  def createProxy(vertx: Vertx, address: String): CounterService = {
+    CounterService(JCounterService.createProxy(vertx.asJava.asInstanceOf[JVertx], address.asInstanceOf[java.lang.String]))
+  }
+
 }
