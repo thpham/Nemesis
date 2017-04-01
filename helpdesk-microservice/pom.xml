@@ -32,9 +32,23 @@
             </resource>
         </resources>
         <plugins>
-            <!-- plugin to create a `fat-jar` -->
             <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
+                <groupId>io.fabric8</groupId>
+                <artifactId>vertx-maven-plugin</artifactId>
+                <version>1.0.6</version>
+                <configuration>
+                    <redeploy>true</redeploy>
+                    <verticle>${main.verticle}</verticle>
+                    <config>${project.basedir}/src/config/local.json</config>
+                    <runArgs>
+                        <!--to fix hazelcat interface selection-->
+                    <!--<runArg>-Dvertx.hazelcast.config=${project.basedir}/src/config/cluster.xml</runArg>-->
+                        <runArg>-cluster</runArg>
+                        <!-- see: http://bit.ly/2opoqVb -->
+                    <!--<runArg>-cluster-host</runArg>
+                        <runArg>your-ip-address</runArg>-->
+                    </runArgs>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

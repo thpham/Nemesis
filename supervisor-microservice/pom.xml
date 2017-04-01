@@ -15,11 +15,11 @@
     </properties>
 
     <dependencies>
-        <!-- <dependency>
+        <dependency>
             <groupId>ch.ithings.nemesis</groupId>
             <artifactId>nemesis-common</artifactId>
             <version>${project.version}</version>
-        </dependency> -->
+        </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-codegen</artifactId>
@@ -51,37 +51,7 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <!-- plugin to create a `fat-jar`--> 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>io.vertx.core.Launcher</Main-Class>
-                                        <Main-Verticle>${main.verticle}</Main-Verticle>
-                                    </manifestEntries>
-                                </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>META-INF/services/io.vertx.core.spi.VerticleFactory</resource>
-                                </transformer>
-                            </transformers>
-                            <artifactSet>
-                            </artifactSet>
-                            <outputFile>${project.build.directory}/${project.artifactId}-fat.jar</outputFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+        <plugins> 
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
@@ -115,6 +85,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>vertx-maven-plugin</artifactId>
+                <version>1.0.6</version>
+                <configuration>
+                    <redeploy>true</redeploy>
+                    <verticle>scala:${main.verticle}</verticle>
+                    <config>${project.basedir}/src/config/local.json</config>
+                    <runArgs>
+                        <!--to fix hazelcat interface selection-->
+                        <!--<runArg>-Dvertx.hazelcast.config=${project.basedir}/src/config/cluster.xml</runArg>-->
+                        <runArg>-cluster</runArg>
+                        <!-- see: http://bit.ly/2opoqVb -->
+                        <!--<runArg>-cluster-host</runArg>
+                        <runArg>your-ip-address</runArg>-->
+                    </runArgs>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
