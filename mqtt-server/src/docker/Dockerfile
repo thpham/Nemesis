@@ -1,7 +1,7 @@
 FROM openjdk:8-jre-alpine
 MAINTAINER thomas.pham@ithings.ch
 
-EXPOSE 8080 6666
+EXPOSE 1883 8883
 
 #dependencies
 RUN apk add --update coreutils
