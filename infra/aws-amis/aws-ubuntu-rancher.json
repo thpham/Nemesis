@@ -1,0 +1,73 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "name": "builder-hvm",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-east-1",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "*ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "m3.medium",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-rancher-k8s-ready-hvm {{timestamp}}",
+      "ssh_private_ip":   false,
+      "associate_public_ip_address": true,
+      "tags": {
+        "OS_Version": "Ubuntu_16.04",
+        "Release": "Latest"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo apt update",
+        "sudo apt -y upgrade",
+        "sudo apt -y install ntpdate curl",
+        "sudo ntpdate pool.ntp.org",
+        "curl https://releases.rancher.com/install-docker/1.12.sh | sudo sh",
+        "sudo usermod -aG docker ubuntu",
+        "sudo apt-mark hold docker-engine"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "includes/docker.logrotate",
+      "destination": "/tmp/docker.logrotate"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mv /tmp/docker.logrotate /etc/logrotate.d/docker",
+        "sudo apt -y install prometheus-node-exporter",
+        "sudo ln -fs /usr/share/zoneinfo/Europe/Zurich /etc/localtime",
+        "sudo dpkg-reconfigure --frontend noninteractive tzdata",
+        "sudo locale-gen en_US en_US.UTF-8"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt clean autoclean",
+        "sudo apt -y autoremove",
+        "sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*"
+      ]
+    }
+  ]
+}
