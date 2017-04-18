@@ -17,7 +17,7 @@ variable "name_prefix" {
 }
 
 variable "ami" {
-    default     = "ami-dfdff3c8"
+    default     = "ami-444ec552" # rancheros-v1.0.0-hvm-1
     description = "Instance AMI ID"
 }
 
