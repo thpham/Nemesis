@@ -24,7 +24,7 @@
         <vertx.version>3.4.1</vertx.version>
         <hazelcast.version>3.8</hazelcast.version>
         <mysql.conn.version>6.0.5</mysql.conn.version>
-        <log4j.version>2.8</log4j.version>
+        <log4j.version>2.17.0</log4j.version>
         <scala.version>2.12.1</scala.version>
         <!--overridden in each project packaged as a fat jar -->
         <main.verticle/>
